@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 /* 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -31,3 +31,9 @@ body {
     text-wrap: balance;
   }
 } */
+
+.cover-container {
+  position: relative;
+  width: 100%;
+  height: 900px; /* Adjust height as needed */
+}
