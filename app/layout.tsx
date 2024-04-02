@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-// add bootstrap css 
-import 'bootstrap/dist/css/bootstrap.css';
-import "./assets/css/style.css";
+// import "./assets/lib/owlcarousel/assets/owl.carousel.min.css";
+// import "./assets/lib/animate/animate.min.css";
+// import "./assets/css/bootstrap.min.css";
+// import "./assets/css/style.css";
+
+
 import Header from "./component/hearder";
 import Footer from "./component/footer";
 
@@ -27,11 +30,22 @@ export default function RootLayout({
           <link rel="preconnect" href="https://fonts.gstatic.com"/>
           <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet"/>
           <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"></link>
+          <link href="assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"></link>
+          <link href="assets/lib/animate/animate.min.css" rel="stylesheet"></link>
+          <link href="assets/css/bootstrap.min.css" rel="stylesheet"></link>
+          <link href="assets/css/style.css" rel="stylesheet"></link>
       </head>
       <body className={inter.className}>
       <Header/>
       {children}
       <Footer/>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/lib/wow/wow.min.js"></script>
+        <script src="assets/lib/easing/easing.min.js"></script>
+        <script src="assets/lib/waypoints/waypoints.min.js"></script>
+        <script src="assets/lib/counterup/counterup.min.js"></script>
+        <script src="assets/lib/owlcarousel/owl.carousel.min.js"></script>
       </body>
     </html>
   );
