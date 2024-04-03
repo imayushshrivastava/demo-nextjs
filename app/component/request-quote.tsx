@@ -8,7 +8,7 @@ const RequestQuote = ()=>{
         name: '',
         email: '',
         message: '',
-        service: ''
+        service: '' 
     };
     const [formData, setFormData] = useState(initialFormData);
 
