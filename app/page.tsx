@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getUsers } from "./api/users/user";
+// import { getUsers } from "./api/users/user";
 import Vender from "./component/vender";
 import Testimonials from "./component/testimonials";
 import RequestQuote from "./component/request-quote";
@@ -7,6 +7,9 @@ import OfferPricing from "./component/offer-pricing";
 import OurServices from "./component/our-services";
 
 export default async function Home() {
+//   const data = await getUsers();
+//   console.log(data); 
+//   console.log('hhhh'); 
   return (
     <>
 

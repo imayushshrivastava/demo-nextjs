@@ -1,7 +1,49 @@
-import React from "react";
-import Image from "next/image";
+"use client"
+import React, { useEffect, useState } from "react";
+import { ContactUsForm } from "../modals/contact-us";
+import axios from "axios";
 
 const RequestQuote = ()=>{
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+
+    const [errors, setErrors] = useState<ContactUsForm>({});
+    const handleChange = (e:any) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        // Email validation
+        if (name === 'email') {
+            const isValidEmail = /\S+@\S+\.\S+/.test(value);
+            setErrors({ ...errors, [name]: isValidEmail ? '' : 'Please enter a valid email address' });
+        }
+      };
+    
+    const handleSubmit = async (e:any) => {
+        e.preventDefault();
+        try {
+            const formData = {
+                name: e.target.name.value,
+                email: e.target.email.value,
+                message: e.target.message.value
+            };
+            await axios.post('/api/request-quotes', formData);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+
+    const [isDisabled, setIsDisabled] = useState(true);
+    const isFormValid = () => {
+        return Object.values(formData).every(value => value !== '') && Object.values(errors).every(value => value === '');
+    };
+    useEffect(() => {
+        setIsDisabled(!isFormValid());
+    }, [formData, errors]);
+
     return(
         <>
         <div className="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -33,27 +75,46 @@ const RequestQuote = ()=>{
                 </div>
                 <div className="col-lg-5">
                     <div className="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="row g-3">
                                 <div className="col-xl-12">
-                                    <input type="text" className="form-control bg-light border-0" placeholder="Your Name" style={{height: '55px'}} />
+                                    <input type="text" className="form-control bg-light border-0"  
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange} 
+                                        placeholder="Your Name" 
+                                        style={{height: '55px'}} 
+                                    />
                                 </div>
                                 <div className="col-12">
-                                    <input type="email" className="form-control bg-light border-0" placeholder="Your Email" style={{height: '55px'}} />
+                                    <input type="email" className="form-control bg-light border-0"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange} 
+                                        placeholder="Your Email" 
+                                        style={{height: '55px'}}
+                                     />
+                                     <div style={{ color: 'red' }}>{errors.email}</div>
                                 </div>
-                                <div className="col-12">
+                                {/* <div className="col-12">
                                     <select className="form-select bg-light border-0" style={{height: '55px'}}>
                                         <option selected>Select A Service</option>
                                         <option value="1">Service 1</option>
                                         <option value="2">Service 2</option>
                                         <option value="3">Service 3</option>
                                     </select>
+                                </div> */}
+                                <div className="col-12">
+                                    <textarea className="form-control bg-light border-0" 
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange} 
+                                        rows={3} 
+                                        placeholder="Message"
+                                    ></textarea>
                                 </div>
                                 <div className="col-12">
-                                    <textarea className="form-control bg-light border-0" rows={3} placeholder="Message"></textarea>
-                                </div>
-                                <div className="col-12">
-                                    <button className="btn btn-dark w-100 py-3" type="submit">Request A Quote</button>
+                                    <button disabled={isDisabled} className="btn btn-dark w-100 py-3" type="submit">Request A Quote</button>
                                 </div>
                             </div>
                         </form>
