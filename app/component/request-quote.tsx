@@ -4,11 +4,13 @@ import { ContactUsForm } from "../modals/contact-us";
 import axios from "axios";
 
 const RequestQuote = ()=>{
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         name: '',
         email: '',
-        message: ''
-    });
+        message: '',
+        service: ''
+    };
+    const [formData, setFormData] = useState(initialFormData);
 
     const [errors, setErrors] = useState<ContactUsForm>({});
     const handleChange = (e:any) => {
@@ -27,9 +29,11 @@ const RequestQuote = ()=>{
             const formData = {
                 name: e.target.name.value,
                 email: e.target.email.value,
+                service: e.target.service.value,
                 message: e.target.message.value
             };
             await axios.post('/api/request-quotes', formData);
+            setFormData(initialFormData);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -43,7 +47,13 @@ const RequestQuote = ()=>{
     useEffect(() => {
         setIsDisabled(!isFormValid());
     }, [formData, errors]);
-
+    
+    const handleSelectChange = (event:any) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value }); // Update formData with selected service value
+      };
+    
+    
     return(
         <>
         <div className="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -96,14 +106,17 @@ const RequestQuote = ()=>{
                                      />
                                      <div style={{ color: 'red' }}>{errors.email}</div>
                                 </div>
-                                {/* <div className="col-12">
-                                    <select className="form-select bg-light border-0" style={{height: '55px'}}>
-                                        <option selected>Select A Service</option>
-                                        <option value="1">Service 1</option>
-                                        <option value="2">Service 2</option>
-                                        <option value="3">Service 3</option>
+                                <div className="col-12">
+                                    <select 
+                                        name="service"  
+                                        value={formData.service} onChange={handleSelectChange}
+                                        className="form-select bg-light border-0" style={{height: '55px'}}>
+                                        <option value=''>Select A Service</option>
+                                        <option value="Service 1">Service 1</option>
+                                        <option value="Service 2">Service 2</option>
+                                        <option value="Service 3">Service 3</option>
                                     </select>
-                                </div> */}
+                                </div>
                                 <div className="col-12">
                                     <textarea className="form-control bg-light border-0" 
                                         name="message"

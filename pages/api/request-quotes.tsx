@@ -3,10 +3,10 @@ import connection from '@/app/utils/db'
 export default async function handler(req:any, res:any) {
     if (req.method === 'POST') {
       try {
-        const { name, email, message } = req.body;
+        const { name, email, service, message } = req.body;
         await connection.query(
-          'INSERT INTO contactus (name, email, message) VALUES (?, ?, ?)',
-          [name, email, message]
+          'INSERT INTO contactus (name, email, service, message) VALUES (?, ?, ?, ?)',
+          [name, email, service, message]
         );
   
         res.status(200).json({ message: 'Form data inserted successfully' });
