@@ -5,7 +5,7 @@ import axios from "axios";
 
 const RequestQuote = ()=>{
     const initialFormData = {
-        name: '',
+        name: '', 
         email: '',
         message: '',
         service: ''
